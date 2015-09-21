@@ -50,8 +50,6 @@ public class FormSelectorCell: FormValueCell {
             valueLabel.textColor = UIColor.lightGrayColor()
         }
         
-        println(rowDescriptor.configuration[FormRowDescriptor.Configuration.LinkedRowDescriptor])
-        
         if let linkedRow = rowDescriptor.configuration[FormRowDescriptor.Configuration.LinkedRowDescriptor] as? FormRowDescriptor{
             
             println("will update \(rowDescriptor.value)")

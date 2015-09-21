@@ -54,9 +54,13 @@ public class FormDateCell: FormValueCell {
         
         if rowDescriptor.value != nil {
             println(rowDescriptor.value)
-            let date = rowDescriptor.value as? NSDate
-            datePicker.date = date!
-            valueLabel.text = self.getDateFormatter().stringFromDate(date!)
+            if let date = rowDescriptor.value as? NSDate{
+                datePicker.date = date
+                valueLabel.text = self.getDateFormatter().stringFromDate(date)
+            }else{
+                //TODO
+                println("can't cast date string \(rowDescriptor.value) to NSDate")
+            }
         }
     }
     

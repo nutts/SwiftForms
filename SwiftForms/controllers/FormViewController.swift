@@ -154,6 +154,7 @@ public class FormViewController : UITableViewController {
             cell?.formViewController = self
             cell?.configure()
         }else{
+            
             cell?.update()
         }
         
