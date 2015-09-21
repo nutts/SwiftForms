@@ -49,6 +49,35 @@ public class FormSelectorCell: FormValueCell {
             valueLabel.text = rowDescriptor.configuration[FormRowDescriptor.Configuration.Placeholder] as? String
             valueLabel.textColor = UIColor.lightGrayColor()
         }
+        
+        println(rowDescriptor.configuration[FormRowDescriptor.Configuration.LinkedRowDescriptor])
+        
+        if let linkedRow = rowDescriptor.configuration[FormRowDescriptor.Configuration.LinkedRowDescriptor] as? FormRowDescriptor{
+            
+            println("will update \(rowDescriptor.value)")
+            
+            println(rowDescriptor.configuration[FormRowDescriptor.Configuration.LinkedRowValueClosure])
+            
+            if let valueFunc = rowDescriptor.configuration[FormRowDescriptor.Configuration.LinkedRowValueClosure] as? LinkedRowValueClosure {
+                
+                
+                linkedRow.value =  valueFunc(rowDescriptor.value)
+                println("the corresponding value are \(linkedRow.value)")
+                
+                //更新
+                linkedRow.parentFormCell?.update()
+            
+            }
+           
+            
+            
+            
+
+            
+        }else{
+            println("no, has no linked row ")
+        }
+        
     }
     
     public override class func formViewController(formViewController: FormViewController, didSelectRow selectedRow: FormBaseCell) {
@@ -66,6 +95,8 @@ public class FormSelectorCell: FormValueCell {
             }
             
             if selectorClass != nil {
+                println("the selectorClass is \(selectorClass)")
+                
                 let selectorController = selectorClass()
                 if let formRowDescriptorViewController = selectorController as? FormSelector {
                     formRowDescriptorViewController.formCell = row
@@ -74,6 +105,8 @@ public class FormSelectorCell: FormValueCell {
                 else {
                     fatalError("FormRowDescriptor.Configuration.SelectorControllerClass must conform to FormSelector protocol.")
                 }
+            }else{
+                println("the sectorClass is null")
             }
         }
     }

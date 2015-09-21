@@ -38,12 +38,21 @@ public class FormTextFieldCell: FormBaseCell {
         titleLabel.setContentHuggingPriority(500, forAxis: .Horizontal)
         titleLabel.setContentCompressionResistancePriority(1000, forAxis: .Horizontal)
         
+//        if rowDescriptor.value != nil {
+//            textField.text = rowDescriptor.value as? String
+//        }
+//        
+//        
+        
         contentView.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .Height, relatedBy: .Equal, toItem: contentView, attribute: .Height, multiplier: 1.0, constant: 0.0))
         contentView.addConstraint(NSLayoutConstraint(item: textField, attribute: .Height, relatedBy: .Equal, toItem: contentView, attribute: .Height, multiplier: 1.0, constant: 0.0))
         contentView.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .CenterY, relatedBy: .Equal, toItem: contentView, attribute: .CenterY, multiplier: 1.0, constant: 0.0))
         contentView.addConstraint(NSLayoutConstraint(item: textField, attribute: .CenterY, relatedBy: .Equal, toItem: contentView, attribute: .CenterY, multiplier: 1.0, constant: 0.0))
         
         textField.addTarget(self, action: "editingChanged:", forControlEvents: .EditingChanged)
+        
+        textField.addTarget(self, action : "editingFinished:", forControlEvents: UIControlEvents.EditingDidEnd)
+        
     }
     
     public override func update() {
@@ -56,7 +65,23 @@ public class FormTextFieldCell: FormBaseCell {
         }
     
         titleLabel.text = rowDescriptor.title
-        textField.text = rowDescriptor.value as? String
+        
+        println("the editing field changed \(rowDescriptor.value)......")
+        
+        
+        if rowDescriptor.value != nil {
+            if rowDescriptor.rowType != FormRowType.Percent{
+                textField.text = rowDescriptor.value.description
+            }else{
+                let num = NSNumberFormatter().numberFromString(rowDescriptor.value.description)
+                textField.text = "\(num!.doubleValue * 100)%"
+            }
+            
+        }
+        
+        
+        
+        
         textField.placeholder = rowDescriptor.configuration[FormRowDescriptor.Configuration.Placeholder] as? String
         
         textField.secureTextEntry = false
@@ -102,6 +127,8 @@ public class FormTextFieldCell: FormBaseCell {
         case .Password:
             textField.secureTextEntry = true
             textField.clearsOnBeginEditing = false
+        case .Percent:
+            textField.keyboardType = .DecimalPad
         default:
             break
         }
@@ -147,7 +174,22 @@ public class FormTextFieldCell: FormBaseCell {
     /// MARK: Actions
     
     internal func editingChanged(sender: UITextField) {
+        
         let trimmedText = sender.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         rowDescriptor.value = count(trimmedText) > 0 ? trimmedText : nil
+    
+    }
+    
+    internal func editingFinished(sender: UITextField) {
+        if rowDescriptor.rowType == FormRowType.Percent {
+            
+            println("the editing finished with value \(rowDescriptor.value)")
+            
+            if let v = rowDescriptor.value {
+                if let num = NSNumberFormatter().numberFromString(rowDescriptor.value.description){
+                    textField.text = "\(num.doubleValue * 100)%"
+                }
+            }
+        }
     }
 }

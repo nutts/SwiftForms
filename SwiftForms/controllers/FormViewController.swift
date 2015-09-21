@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftForms
 
 public class FormViewController : UITableViewController {
 
@@ -20,6 +21,10 @@ public class FormViewController : UITableViewController {
     /// MARK: Properties
     
     public var form: FormDescriptor!
+    
+    public var enabled : Bool = false  //设置当前的表单是否能够编辑, 默认不能编辑，只能查看
+    
+    private var overlay : UIView?  //用于显示加载的状态
     
     /// MARK: Init
     
@@ -70,6 +75,38 @@ public class FormViewController : UITableViewController {
         return nil
     }
     
+    
+//    public func showLoadingSpining(){
+//        
+//        overlay = UIView(frame : self.tableView.frame)
+//        
+//        overlay?.backgroundColor = UIColor.blackColor()
+//        
+//        overlay?.alpha = 0.8
+//        
+//        let indicator = UIActivityIndicatorView()
+//        
+//        indicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0)
+//        
+//        indicator.center = overlay!.center
+//        
+//        indicator.hidesWhenStopped = true
+//        
+//        overlay?.addSubview(indicator)
+//        
+//        indicator.startAnimating()
+//        
+//        self.tableView.addSubview(overlay!)
+//        
+//        
+//    }
+//    
+//    public func stopLoadingSpining(){
+//        
+//        overlay?.removeFromSuperview()
+//        
+//    }
+
     public func setValue(value: NSObject, forTag tag: String) {
         
         var sectionIndex = 0
@@ -110,21 +147,45 @@ public class FormViewController : UITableViewController {
         let reuseIdentifier = NSStringFromClass(formBaseCellClass)
         
         var cell: FormBaseCell? = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier) as? FormBaseCell
+        
         if cell == nil {
             
             cell = formBaseCellClass(style: .Default, reuseIdentifier: reuseIdentifier)
             cell?.formViewController = self
             cell?.configure()
+        }else{
+            cell?.update()
         }
+        
         
         cell?.rowDescriptor = rowDescriptor
         
+        rowDescriptor.parentFormCell = cell
+        
         // apply cell custom design
         if let cellConfiguration = rowDescriptor.configuration[FormRowDescriptor.Configuration.CellConfiguration] as? NSDictionary {
+            println("apply custom design")
+            
             for (keyPath, value) in cellConfiguration {
                 cell?.setValue(value, forKeyPath: keyPath as! String)
             }
         }
+        
+        //进行其他的一些通用的设置
+        switch(rowDescriptor.rowType){
+        case FormRowType.Name, FormRowType.Number, FormRowType.NamePhone, FormRowType.MultilineText, FormRowType.Text, FormRowType.Decimal,FormRowType.Percent,
+            FormRowType.Email, FormRowType.Phone:
+                cell?.setValue(NSTextAlignment.Right.rawValue, forKeyPath: "textField.textAlignment")
+                //设置是否能够进行编辑
+                cell?.setValue(self.enabled, forKeyPath: "textField.enabled")
+        case FormRowType.SegmentedControl:
+                cell?.setValue(self.enabled, forKeyPath: "segmentedControl.enabled")
+        default:
+                println("not need text alignment")
+        }
+        
+        
+        
         return cell!
     }
     
@@ -191,6 +252,9 @@ public class FormViewController : UITableViewController {
             Static.defaultCellClasses[FormRowType.Slider] = FormSliderCell.self
             Static.defaultCellClasses[FormRowType.MultipleSelector] = FormSelectorCell.self
             Static.defaultCellClasses[FormRowType.MultilineText] = FormTextViewCell.self
+            Static.defaultCellClasses[FormRowType.Image] = FormImageCell.self
+            Static.defaultCellClasses[FormRowType.Percent] = FormTextFieldCell.self
+            
         }
         return Static.defaultCellClasses[rowType]!
     }
@@ -216,4 +280,7 @@ public class FormViewController : UITableViewController {
         
         return formBaseCellClass
     }
+    
+    
+      
 }

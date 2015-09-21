@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <viewController id="kPS-1m-hyV" customClass="ImageSelectViewController" customModule="SwiftForms" customModuleProvider="target">
+            <layoutGuides>
+                <viewControllerLayoutGuide type="top" id="dXs-f5-QVX"/>
+                <viewControllerLayoutGuide type="bottom" id="7Ez-M7-d1h"/>
+            </layoutGuides>
+            <view key="view" contentMode="scaleToFill" id="RRj-bz-MqE">
+                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yrP-GR-g8g">
+                        <rect key="frame" x="16" y="72" width="568" height="528"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gju-Uc-fas">
+                        <rect key="frame" x="30" y="43" width="164" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstItem="yrP-GR-g8g" firstAttribute="leading" secondItem="RRj-bz-MqE" secondAttribute="leadingMargin" id="4D0-ok-mxl"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="yrP-GR-g8g" secondAttribute="bottom" id="9r0-gE-bTf"/>
+                    <constraint firstItem="Gju-Uc-fas" firstAttribute="top" secondItem="dXs-f5-QVX" secondAttribute="bottom" constant="23" id="Bwb-Iv-kvq"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="yrP-GR-g8g" secondAttribute="trailing" id="IFj-O3-hyR"/>
+                    <constraint firstItem="yrP-GR-g8g" firstAttribute="top" secondItem="dXs-f5-QVX" secondAttribute="bottom" constant="52" id="Pxm-nm-kSi"/>
+                    <constraint firstItem="Gju-Uc-fas" firstAttribute="leading" secondItem="RRj-bz-MqE" secondAttribute="leadingMargin" constant="14" id="g4G-Rh-dhV"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="imageView" destination="yrP-GR-g8g" id="ymt-8i-pzg"/>
+            </connections>
+            <point key="canvasLocation" x="345" y="359"/>
+        </viewController>
+    </objects>
+</document>

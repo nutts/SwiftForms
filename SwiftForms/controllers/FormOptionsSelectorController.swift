@@ -135,7 +135,10 @@ public class FormOptionsSelectorController: UITableViewController, FormSelector 
             }
         }
         else {
-            formCell.rowDescriptor.value = NSMutableArray(object: optionValue)
+            // formCell.rowDescriptor.value = NSMutableArray(object: optionValue)
+            
+            //if not allow multiple selection, then only return single value instead of arrays
+            formCell.rowDescriptor.value = optionValue
         }
         
         formCell.update()

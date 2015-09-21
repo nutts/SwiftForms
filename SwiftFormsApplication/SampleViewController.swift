@@ -1,15 +1,38 @@
 //
-//  ExampleFormViewController.swift
-//  SwiftForms
+//  SampleViewController.swift
+//  SwiftFormsApplication
 //
-//  Created by Miguel Angel Ortuno on 20/08/14.
-//  Copyright (c) 2014 Miguel Angel Ortuño. All rights reserved.
+//  Created by 遂 李 on 7/10/15.
+//  Copyright (c) 2015 Miguel Angel Ortuno Ortuno. All rights reserved.
 //
 
 import UIKit
 import SwiftForms
 
-class ExampleFormViewController: FormViewController {
+class SampleViewController: FormViewController {
+        
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
+
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
+            super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        
+        loadForm()
+        
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    
     
     struct Static {
         static let nameTag = "name"
@@ -29,45 +52,15 @@ class ExampleFormViewController: FormViewController {
         static let stepper = "stepper"
         static let slider = "slider"
         static let textView = "textview"
-        static let imageView = "imageView"
-        
     }
+
     
-    @IBAction func openView(sender: AnyObject) {
-        println("hello")
-        
-        var v = SampleViewController(nibName: "SampleViewController", bundle: nil)
-        
-        self.presentViewController(v, animated: true, completion: nil)
-        
-        
-        
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.loadForm()
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Submit", style: .Plain, target: self, action: "submit:")
-    }
-    
-    /// MARK: Actions
-    
-    func submit(_: UIBarButtonItem!) {
-        
-        //let message = self.form.formValues().description
-        
-        let message = self.form.formValuesJSON().description
-        
-        let alert: UIAlertView = UIAlertView(title: "Form output", message: message, delegate: nil, cancelButtonTitle: "OK")
-        
-        alert.show()
-    }
-    
-    /// MARK: Private interface
-    
+
     private func loadForm() {
         
         let form = FormDescriptor()
@@ -79,7 +72,7 @@ class ExampleFormViewController: FormViewController {
         var row: FormRowDescriptor! = FormRowDescriptor(tag: Static.emailTag, rowType: .Email, title: "Email")
         row.configuration[FormRowDescriptor.Configuration.CellConfiguration] = ["textField.placeholder" : "john@gmail.com", "textField.textAlignment" : NSTextAlignment.Right.rawValue]
         section1.addRow(row)
-
+        
         row = FormRowDescriptor(tag: Static.passwordTag, rowType: .Password, title: "Password")
         row.configuration[FormRowDescriptor.Configuration.CellConfiguration] = ["textField.placeholder" : "Enter password", "textField.textAlignment" : NSTextAlignment.Right.rawValue]
         section1.addRow(row)
@@ -99,7 +92,7 @@ class ExampleFormViewController: FormViewController {
         section2.addRow(row)
         
         let section3 = FormSectionDescriptor()
-
+        
         row = FormRowDescriptor(tag: Static.URLTag, rowType: .URL, title: "URL")
         row.configuration[FormRowDescriptor.Configuration.CellConfiguration] = ["textField.placeholder" : "e.g. gethooksapp.com", "textField.textAlignment" : NSTextAlignment.Right.rawValue]
         section3.addRow(row)
@@ -131,7 +124,7 @@ class ExampleFormViewController: FormViewController {
             default:
                 return nil
             }
-        } as TitleFormatterClosure
+            } as TitleFormatterClosure
         
         row.configuration[FormRowDescriptor.Configuration.CellConfiguration] = ["titleLabel.font" : UIFont.boldSystemFontOfSize(30.0), "segmentedControl.tintColor" : UIColor.redColor()]
         
@@ -155,12 +148,12 @@ class ExampleFormViewController: FormViewController {
             default:
                 return nil
             }
-        } as TitleFormatterClosure
+            } as TitleFormatterClosure
         
         row.value = "M"
         
         section5.addRow(row)
-
+        
         row = FormRowDescriptor(tag: Static.birthday, rowType: .Date, title: "Birthday")
         section5.addRow(row)
         row = FormRowDescriptor(tag: Static.categories, rowType: .MultipleSelector, title: "Categories")
@@ -181,7 +174,7 @@ class ExampleFormViewController: FormViewController {
             default:
                 return nil
             }
-        } as TitleFormatterClosure
+            } as TitleFormatterClosure
         
         section5.addRow(row)
         
@@ -208,29 +201,12 @@ class ExampleFormViewController: FormViewController {
         row = FormRowDescriptor(tag: Static.button, rowType: .Button, title: "Dismiss")
         row.configuration[FormRowDescriptor.Configuration.DidSelectClosure] = {
             self.view.endEditing(true)
-        } as DidSelectClosure
+            } as DidSelectClosure
         section8.addRow(row)
         
-        
-        
-        let section9 = FormSectionDescriptor()
-        row = FormRowDescriptor(tag: Static.imageView, rowType: FormRowType.Image, title : "身份证")
-        
-        row.configuration[FormRowDescriptor.Configuration.SelectorControllerClass] = ImageViewController.self
-        
-       // row.configuration[FormRowDescriptor.Configuration.CellConfiguration] = ["attachmentView.textAlignment" : NSTextAlignment.Right.rawValue]
-        
-        //row.configuration[FormRowDescriptor.Configuration.SelectorControllerClass] = ImageViewController.class
-        
-            
-        section9.addRow(row)
-        
-        
-        
-        
-        
-        form.sections = [section9, section1, section2, section3, section4, section5, section6, section7, section8]
+        form.sections = [section1, section2, section3, section4, section5, section6, section7, section8]
         
         self.form = form
     }
+    
 }

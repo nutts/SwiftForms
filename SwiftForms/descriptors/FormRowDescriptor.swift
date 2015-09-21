@@ -34,12 +34,16 @@ public enum FormRowType {
     case Slider
     case MultipleSelector
     case MultilineText
+    case Image
+    case Percent
 }
 
 public typealias DidSelectClosure = (Void) -> Void
 public typealias UpdateClosure = (FormRowDescriptor) -> Void
 public typealias TitleFormatterClosure = (NSObject) -> String!
 public typealias VisualConstraintsClosure = (FormBaseCell) -> NSArray
+public typealias LinkedRowValueClosure = (NSObject?) -> String!
+
 
 public class FormRowDescriptor: NSObject {
 
@@ -78,6 +82,13 @@ public class FormRowDescriptor: NSObject {
         public static let ShowsInputToolbar = "FormRowDescriptorConfigurationShowsInputToolbar"
         
         public static let DateFormatter = "FormRowDescriptorConfigurationDateFormatter"
+        
+        //链接对应的字段
+        public static let LinkedRowDescriptor = "FormRowDescriptorLinkedRowDescriptor"
+        
+        //链接字段对应的函数
+        public static let LinkedRowValueClosure = "FormRowDescriptorLinkedRowValueClosure"
+        
     }
     
     /// MARK: Properties
@@ -85,7 +96,9 @@ public class FormRowDescriptor: NSObject {
     public var title: String!
     public var rowType: FormRowType = .Unknown
     public var tag: String!
-
+    
+    public weak var parentFormCell : FormBaseCell!
+    
     public var value: NSObject! {
         willSet {
             if let willUpdateBlock = self.configuration[Configuration.WillUpdateClosure] as? UpdateClosure {
@@ -99,15 +112,59 @@ public class FormRowDescriptor: NSObject {
         }
     }
     
+    public var value2 : NSObject! {
+        get{
+            println("start to get value with key:\(tag), value is \(value)")
+            switch rowType{
+            case .BooleanSwitch, .BooleanCheck:
+                if value == true {
+                    return Int(1)
+                }else{
+                    return Int(0)
+                }
+            case .Number:
+                if let v = value as? Int{
+                    return v
+                }else if let s = value as? NSString{
+                    return s.integerValue
+                }else{
+                    println("FAIL to convert")
+                    return value.description
+                }
+            case .MultipleSelector:
+                if let v = value as? NSNumber {
+                    println("successfully convert to NSNumber with key:\(tag), value: \(value)")
+                    return v
+                }else{
+                    println("FAIL convert to NSNumber with key:\(tag), value:\(value)")
+                    return value.description
+                }
+            case .Decimal, .Percent, .NumbersAndPunctuation:
+                if let v = value as? NSNumber {
+                    return v
+                }else if let s = value as? NSString{
+                    return s.doubleValue
+                }else{
+                    println("Fail to convert")
+                    return value.description
+                }
+
+            default:
+                return value.description
+            }
+        }
+    }
+    
     public var configuration: [NSObject : Any] = [:]
     
     /// MARK: Init
     
     public override init() {
         super.init()
-        configuration[Configuration.Required] = true
+        configuration[Configuration.Required] = false  //不是必须输入的，除非手动设置为必填
         configuration[Configuration.AllowsMultipleSelection] = false
         configuration[Configuration.ShowsInputToolbar] = false
+
     }
     
     public convenience init(tag: String, rowType: FormRowType, title: String, placeholder: String! = nil) {
