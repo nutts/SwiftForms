@@ -83,6 +83,8 @@ public class FormRowDescriptor: NSObject {
         
         public static let DateFormatter = "FormRowDescriptorConfigurationDateFormatter"
         
+        public static let DisplayDateFormatter = "FormRowDescriptorConfigurationDisplayDateFormatter"
+        
         //链接对应的字段
         public static let LinkedRowDescriptor = "FormRowDescriptorLinkedRowDescriptor"
         

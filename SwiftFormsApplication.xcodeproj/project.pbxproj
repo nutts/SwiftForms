@@ -49,6 +49,8 @@
 		B5CB96F01B57DACE000AA994 /* ImageSelectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CB96EF1B57DACE000AA994 /* ImageSelectViewController.xib */; };
 		B5CB96F81B5DE5AF000AA994 /* ImageShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CB96F61B5DE5AF000AA994 /* ImageShowViewController.swift */; };
 		B5CB96F91B5DE5AF000AA994 /* ImageShowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CB96F71B5DE5AF000AA994 /* ImageShowViewController.xib */; };
+		B5DF8B461BB2A6310053A2F6 /* TestUITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DF8B441BB2A6310053A2F6 /* TestUITableViewCell.swift */; };
+		B5DF8B471BB2A6310053A2F6 /* TestUITableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5DF8B451BB2A6310053A2F6 /* TestUITableViewCell.xib */; };
 		B5F070071BA6A9F800BFABC6 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B5F070061BA6A9F800BFABC6 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
@@ -123,6 +125,8 @@
 		B5CB96EF1B57DACE000AA994 /* ImageSelectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageSelectViewController.xib; sourceTree = "<group>"; };
 		B5CB96F61B5DE5AF000AA994 /* ImageShowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageShowViewController.swift; sourceTree = "<group>"; };
 		B5CB96F71B5DE5AF000AA994 /* ImageShowViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageShowViewController.xib; sourceTree = "<group>"; };
+		B5DF8B441BB2A6310053A2F6 /* TestUITableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUITableViewCell.swift; sourceTree = "<group>"; };
+		B5DF8B451BB2A6310053A2F6 /* TestUITableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestUITableViewCell.xib; sourceTree = "<group>"; };
 		B5F070061BA6A9F800BFABC6 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -247,6 +251,8 @@
 				0CDBB4F01B10699A00BE6ACF /* FormStepperCell.swift */,
 				0CDBB4F21B10724600BE6ACF /* FormSliderCell.swift */,
 				B5C7C2021B5399FF000D4428 /* FormImageCell.swift */,
+				B5DF8B441BB2A6310053A2F6 /* TestUITableViewCell.swift */,
+				B5DF8B451BB2A6310053A2F6 /* TestUITableViewCell.xib */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -396,6 +402,7 @@
 			files = (
 				B5CB96F01B57DACE000AA994 /* ImageSelectViewController.xib in Resources */,
 				B5CB96F91B5DE5AF000AA994 /* ImageShowViewController.xib in Resources */,
+				B5DF8B471BB2A6310053A2F6 /* TestUITableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,6 +428,7 @@
 				0CCA34851B050525006D9666 /* FormSelector.swift in Sources */,
 				0CCA34791B050525006D9666 /* FormTitleCell.swift in Sources */,
 				0CDBB4F31B10724600BE6ACF /* FormSliderCell.swift in Sources */,
+				B5DF8B461BB2A6310053A2F6 /* TestUITableViewCell.swift in Sources */,
 				B5CB96F81B5DE5AF000AA994 /* ImageShowViewController.swift in Sources */,
 				0CCA34891B050525006D9666 /* FormSectionDescriptor.swift in Sources */,
 				0CCA34871B050525006D9666 /* FormDescriptor.swift in Sources */,

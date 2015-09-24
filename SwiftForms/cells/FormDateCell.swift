@@ -54,12 +54,16 @@ public class FormDateCell: FormValueCell {
         
         if rowDescriptor.value != nil {
             println(rowDescriptor.value)
-            if let date = rowDescriptor.value as? NSDate{
-                datePicker.date = date
-                valueLabel.text = self.getDateFormatter().stringFromDate(date)
-            }else{
-                //TODO
-                println("can't cast date string \(rowDescriptor.value) to NSDate")
+            
+            if let dateStr = rowDescriptor.value as? String{
+                if let dateValue = self.getDateFormatter().dateFromString(dateStr){
+                    datePicker.date = dateValue
+                    valueLabel.text = self.getDisplayDateFormatter().stringFromDate(dateValue)
+                
+                }else{
+                    println("WARNNING!! this is invalid string \(dateStr) with format \(self.getDateFormatter().dateFormat)")
+                    valueLabel.text = dateStr
+                }
             }
         }
     }
@@ -90,7 +94,7 @@ public class FormDateCell: FormValueCell {
     
     internal func valueChanged(sender: UIDatePicker) {
         rowDescriptor.value = sender.date
-        valueLabel.text = getDateFormatter().stringFromDate(sender.date)
+        valueLabel.text = getDisplayDateFormatter().stringFromDate(sender.date)
         update()
     }
     
@@ -102,5 +106,12 @@ public class FormDateCell: FormValueCell {
             return dateFormatter
         }
         return defaultDateFormatter
+    }
+    
+    private func getDisplayDateFormatter() -> NSDateFormatter{
+        if let dateFormatter = self.rowDescriptor.configuration[FormRowDescriptor.Configuration.DisplayDateFormatter] as? NSDateFormatter {
+            return dateFormatter
+        }
+        return getDateFormatter()
     }
 }

@@ -203,7 +203,7 @@ public class FormViewController : UITableViewController {
     public override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 
         let rowDescriptor = formRowDescriptorAtIndexPath(indexPath)
-        
+
         if let formBaseCellClass = formBaseCellClassFromRowDescriptor(rowDescriptor) {
             return formBaseCellClass.formRowCellHeight()
         }

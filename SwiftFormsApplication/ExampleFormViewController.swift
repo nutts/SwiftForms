@@ -161,8 +161,12 @@ class ExampleFormViewController: FormViewController {
         
         section5.addRow(row)
 
+        
         row = FormRowDescriptor(tag: Static.birthday, rowType: .Date, title: "Birthday")
+        
         section5.addRow(row)
+        
+        
         row = FormRowDescriptor(tag: Static.categories, rowType: .MultipleSelector, title: "Categories")
         row.configuration[FormRowDescriptor.Configuration.Options] = [0, 1, 2, 3, 4]
         row.configuration[FormRowDescriptor.Configuration.AllowsMultipleSelection] = true

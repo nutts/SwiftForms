@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Miguel Angel Ortuno Ortuno. All rights reserved.
 //
 
-public class FormImageCell: FormTitleCell {
+public class FormImageCell: FormBaseCell {
     
     /// MARK: Cell views
     
@@ -16,9 +16,10 @@ public class FormImageCell: FormTitleCell {
     
     public var imageCache = [String : UIImage]()
     
+    public let titleLabel = UILabel()
     
     //public var showImage : UIImage?
-    /// MARK: FormBaseCell
+    
     
     //public var selectedImages = [UIImage]()
     
@@ -27,78 +28,39 @@ public class FormImageCell: FormTitleCell {
         
         let showImage = UIImage(named: "camera.png") as UIImage?
         
-//        let button : UIButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-//        
-//        button.frame = CGRectMake(100, 100, 100, 100)
-//        
-//        button.setImage(image, forState: UIControlState.Normal)
-//        
-//        button.addTarget(self, action: "btnTouched", forControlEvents: UIControlEvents.TouchUpInside)
-//        
+        titleLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+        titleLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
         
-        let attachImg = UIImage(named: "系统截图.png") as UIImage?
-        
-        //let attachImg = UIImage(named: "Camera-50.png") as UIImage?
+        // apply constant constraints
+        attachmentView = UIView()
         
         cameraView = UIImageView(image: showImage)
         
-        // let tapGesture = UITapGestureRecognizer(target: self, action: "tapGesture:")
-        
-       // cameraView.addGestureRecognizer(tapGesture)
-        
-       // cameraView.userInteractionEnabled = true
-        
-        
-        //attachmentView = UIImageView(image: attachImg)
-        
-        attachmentView = UIView()
-        
         titleLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
-        
         cameraView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        
-        
-        
         attachmentView.setTranslatesAutoresizingMaskIntoConstraints(false)
         
+        
+
         cameraView.userInteractionEnabled = true
-        
         cameraView.contentMode = UIViewContentMode.Right
-        
         attachmentView.contentMode = UIViewContentMode.Center
-        
-        //sliderView.addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
+     
         
         
         contentView.addSubview(titleLabel)
-        
         contentView.addSubview(attachmentView)
         
         contentView.addSubview(cameraView)
         
+        titleLabel.setContentHuggingPriority(500, forAxis: .Horizontal)
         
-//        contentView.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .Top, relatedBy: .Equal, toItem: cameraView, attribute: .Top, multiplier: 1.0, constant: 0.0))
-//        
-//        
-//        contentView.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: .Bottom, relatedBy: .Equal, toItem: attachmentView, attribute: .Top, multiplier: 1.0, constant: 8.0))
-//        
-//        
-//        contentView.addConstraint(NSLayoutConstraint(item: attachmentView, attribute: .Bottom, relatedBy: .Equal, toItem: contentView, attribute: .Bottom, multiplier: 1.0, constant: 8.0))
-        
-//        contentView.addConstraint(NSLayoutConstraint(item: attachmentView, attribute: .Bottom, relatedBy: .Equal, toItem: contentView, attribute: .Bottom, multiplier: 0.5, constant: 0.0))
-        
-//        contentView.addConstraint(NSLayoutConstraint(item: attachmentView, attribute: NSLayoutAttribute.Trailing, relatedBy: NSLayoutRelation.Equal, toItem: cameraView, attribute: NSLayoutAttribute.Leading, multiplier: 1.0, constant: 0))
-//        
-       
-//         contentView.addConstraint(NSLayoutConstraint(item: cameraView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1.0, constant: 25))
-//        
-//        
-//        contentView.addConstraint(NSLayoutConstraint(item: cameraView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1.0, constant: 30))
+        contentView.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: contentView, attribute: NSLayoutAttribute.Top, multiplier: 1.0, constant: 0))
         
         
-        contentView.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1.0, constant: 40))
+        contentView.addConstraint(NSLayoutConstraint(item: titleLabel, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.GreaterThanOrEqual, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1.0, constant: 200))
         
-        contentView.addConstraint(NSLayoutConstraint(item: attachmentView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1.0, constant: 60))
+          contentView.addConstraint(NSLayoutConstraint(item: attachmentView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: contentView, attribute: NSLayoutAttribute.Bottom, multiplier: 1.0, constant: 0))
         
 //        cameraView.backgroundColor = UIColor.lightGrayColor()
 //        titleLabel.backgroundColor = UIColor.greenColor()
@@ -106,34 +68,21 @@ public class FormImageCell: FormTitleCell {
         
     }
     
-    public override class func formRowCellHeight() -> CGFloat {
+    public override class func formRowCellHeight
+        () -> CGFloat {
         return 100.0
     }
-    
     
     //弹出选择菜单
     public class func generateAlertController(parentViewController : UIViewController, selectedRow : FormBaseCell) -> UIAlertController{
         
         
-        let optionMenu = UIAlertController(title: "option menu", message: "Choose Option", preferredStyle: UIAlertControllerStyle.ActionSheet)
-        
+        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         //2
         let album = UIAlertAction(title: "从手机相册里面选择", style: UIAlertActionStyle.Default, handler: {
             (alert : UIAlertAction!) -> Void in
             
-            //let imageV = ImageSelectViewController()
-            //let imageV = ImageSelectViewController(nibName: "ImageSelectViewController", bundle: nil)
-            
-//            let imagePicker = UIImagePickerController()
-//            
-//            imagePicker.allowsEditing = false
-//            imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
-//            
-//            if let selectViewController = parentViewController as? ImageSelectViewController{
-//                    imagePicker.delegate = selectViewController
-//            }
-//            
             let imagePicker = ImageSelectViewController()
             
             imagePicker.formCell = selectedRow
@@ -143,8 +92,6 @@ public class FormImageCell: FormTitleCell {
             parentViewController.presentViewController(imagePicker, animated: true){
                 println("the image picker completed")
             }
-            
-           // parentViewController.navigationController?.pushViewController(imagePicker, animated: true)
             
         })
     
@@ -158,9 +105,6 @@ public class FormImageCell: FormTitleCell {
             
             imagePicker.showType = UIImagePickerControllerSourceType.Camera
             
-            
-            //parentViewController.navigationController?.pushViewController(imageV, animated: true)
-            
             parentViewController.presentViewController(imagePicker, animated: true){
                 println("the image pcker completed")
             }
@@ -171,8 +115,6 @@ public class FormImageCell: FormTitleCell {
             (alert : UIAlertAction!) -> Void in
             
             println("cancelled")
-            
-            
         })
     
         optionMenu.addAction(album)
@@ -185,8 +127,6 @@ public class FormImageCell: FormTitleCell {
         return optionMenu
     }
     
-   
-    
     public override func constraintsViews() -> [String : UIView] {
         
         return ["titleLabel" : titleLabel, "attachView" : attachmentView, "cameraView" : cameraView]
@@ -195,13 +135,12 @@ public class FormImageCell: FormTitleCell {
     public override func defaultVisualConstraints() -> [String] {
         var constraints: [String] = []
         
-        constraints.append("V:|[titleLabel]-0-[attachView]|")
-       // constraints.append("V:|[attachView]|")
+        constraints.append("V:|[titleLabel(==44)]-1-[attachView]|")
         
-        constraints.append("V:|[cameraView]-0-[attachView]|")
+        constraints.append("V:|[cameraView(==44)]-1-[attachView]|")
         
-        constraints.append("H:|-15-[titleLabel(>=100)]-[cameraView]-15-|")
-
+        constraints.append("H:|-15-[titleLabel]-50-[cameraView]-15-|")
+        
         constraints.append("H:|-15-[attachView]-15-|")
         
         return constraints
@@ -211,12 +150,9 @@ public class FormImageCell: FormTitleCell {
     public override func update() {
         super.update()
         
-         titleLabel.text = rowDescriptor.title
-        
-        //reset attachmentView
+        titleLabel.text = rowDescriptor.title
         
         let subViews = attachmentView.subviews
-        
         
         for subview in subViews{
             
@@ -235,11 +171,7 @@ public class FormImageCell: FormTitleCell {
             if let selectedImages = rowDescriptor.value as? [NSObject]{
                 
                 for var i = 0 ; i < selectedImages.count ; ++i {
-                    //let row = i / 2
-                    //let col = i % 2
                     
-                    //let x  = CGFloat(row) * 60.0
-                    //let y  = CGFloat(col) * 60.0
                     let x = CGFloat(i) * 60
                     let y = CGFloat(0)
                     var newImageView = UIImageView(frame: CGRectMake(x, y, 50, 50))
@@ -297,13 +229,19 @@ public class FormImageCell: FormTitleCell {
                     }
                     
                     attachmentView.addSubview(newImageView)
-                    
-                    
                 }
            }
         }
         
+//        println("needs display")
+//        
+//        contentView.setNeedsUpdateConstraints()
+//
+//        
+//        contentView.setNeedsDisplay()
     
+        
+        
     }
     
     
