@@ -199,7 +199,7 @@ public class FormImageCell: FormBaseCell {
                             
                             let mainQueue = NSOperationQueue.mainQueue()
                             
-                            newImageView.image = UIImage(named: "camera.png")
+                            newImageView.image = UIImage(named: "moren")
                             
                             NSURLConnection.sendAsynchronousRequest(request, queue: mainQueue, completionHandler : {
                                 (response, data, error) in
