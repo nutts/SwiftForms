@@ -106,6 +106,7 @@ class SampleViewController: FormViewController {
         row = FormRowDescriptor(tag: Static.enabled, rowType: .BooleanSwitch, title: "Enable")
         section4.addRow(row)
         
+        
         row = FormRowDescriptor(tag: Static.check, rowType: .BooleanCheck, title: "Doable")
         section4.addRow(row)
         

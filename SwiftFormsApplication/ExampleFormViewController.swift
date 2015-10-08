@@ -34,9 +34,9 @@ class ExampleFormViewController: FormViewController {
     }
     
     @IBAction func openView(sender: AnyObject) {
-        println("hello")
+        print("hello")
         
-        var v = SampleViewController(nibName: "SampleViewController", bundle: nil)
+        let v = SampleViewController(nibName: "SampleViewController", bundle: nil)
         
         self.presentViewController(v, animated: true, completion: nil)
         
@@ -233,7 +233,7 @@ class ExampleFormViewController: FormViewController {
         
         
         
-        form.sections = [section9, section1, section2, section3, section4, section5, section6, section7, section8]
+        form.sections = [section1, section2, section3, section4, section5, section6, section7, section8]
         
         self.form = form
     }
